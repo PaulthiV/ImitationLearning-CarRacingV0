@@ -37,7 +37,7 @@ def data_processing(v_data):
     return pred_a
 
 def model_pred(test_data):
-    keras_model = keras.models.load_model('models/final/model_keras_trial.model')
+    keras_model = keras.models.load_model('models/model_keras_trial.model')
     keras_predictions = []
     prediction = keras_model.predict(test_data)
 
