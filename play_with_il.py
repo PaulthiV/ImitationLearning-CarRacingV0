@@ -1,3 +1,4 @@
+import tensorflow as tf
 import numpy as np
 import keras
 from keras.models import Model
@@ -9,6 +10,9 @@ import matplotlib.pyplot as plt
 import time
 import os
 import cv2
+
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
+tf.compat.v1.disable_eager_execution()
 
 env_name = "CarRacing-v0"
 env = gym.make(env_name)
@@ -37,7 +41,7 @@ def data_processing(v_data):
     return pred_a
 
 def model_pred(test_data):
-    keras_model = keras.models.load_model('models/model_keras_trial.model')
+    keras_model = keras.models.load_model('models/final/model_il_cnn_simple.model')
     keras_predictions = []
     prediction = keras_model.predict(test_data)
 
@@ -109,8 +113,9 @@ if __name__ == "__main__":
         while True:
             v = env.render(mode='rgb_array')
             data_array = data_processing(v)
+            print(data_array)
 
-            s, r, done, info = env.step(np.array(data_array))
+            s, r, done, info = env.step(np.array(a))
             total_reward += r
             if steps % 200 == 0 or done:
                 print("\naction " + str(["{:+0.2f}".format(x) for x in a]))
